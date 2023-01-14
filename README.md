@@ -4,7 +4,7 @@
 [![LICENSE](https://img.shields.io/badge/License-MIT-yellow.svg)]() 
 [![document](https://img.shields.io/badge/documentation-yes-brightgreen.svg)]()
 
-> Front-end Project for jsonWeb `Exit`.
+> Front-end Admin Project for jsonWeb `Exit`.
 > <br>
 
 ## Convention
