@@ -1,1 +1,11 @@
-// 페이지 라우팅을 여기서 다 처리한다.
+import RegisterCafePage from "@/pages/RegisterCafePage.vue";
+
+const routes = [
+  {
+    path: "/register/cafe",
+    name: "registerCafe",
+    component: RegisterCafePage,
+  },
+];
+
+export default routes;

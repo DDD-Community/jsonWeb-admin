@@ -1,11 +1,12 @@
 <template>
-  <div></div>
+  <div>
+    <h2>카페 등록</h2>
+  </div>
 </template>
 
 <script>
-// Pages에는 화면 페이지를 넣는다.
 export default {
-  name: "HelloWorld",
+  name: "registerCafe",
   props: {
     msg: String,
   },
