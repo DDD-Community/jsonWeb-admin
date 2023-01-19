@@ -37,31 +37,31 @@
         </v-row>
         <v-row>
           <v-col>
-            <OpenHourInput :date="'월요일'"></OpenHourInput>
+            <OpenHourInput @time="updateDate" :date="'월요일'"></OpenHourInput>
           </v-col>
           <v-col>
-            <OpenHourInput :date="'화요일'"></OpenHourInput>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <OpenHourInput :date="'수요일'"></OpenHourInput>
-          </v-col>
-          <v-col>
-            <OpenHourInput :date="'목요일'"></OpenHourInput>
+            <OpenHourInput @time="updateDate" :date="'화요일'"></OpenHourInput>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <OpenHourInput :date="'금요일'"></OpenHourInput>
+            <OpenHourInput @time="updateDate" :date="'수요일'"></OpenHourInput>
           </v-col>
           <v-col>
-            <OpenHourInput :date="'토요일'"></OpenHourInput>
+            <OpenHourInput @time="updateDate" :date="'목요일'"></OpenHourInput>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <OpenHourInput :date="'일요일'"></OpenHourInput>
+            <OpenHourInput @time="updateDate" :date="'금요일'"></OpenHourInput>
+          </v-col>
+          <v-col>
+            <OpenHourInput @time="updateDate" :date="'토요일'"></OpenHourInput>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <OpenHourInput @time="updateDate" :date="'일요일'"></OpenHourInput>
           </v-col>
         </v-row>
       </v-container>
@@ -85,6 +85,36 @@ export default {
       homepage: "",
       address: "",
       tel: "",
+      date: [
+        {
+          day: "월요일",
+          time: "",
+        },
+        {
+          day: "화요일",
+          time: "",
+        },
+        {
+          day: "수요일",
+          time: "",
+        },
+        {
+          day: "목요일",
+          time: "",
+        },
+        {
+          day: "금요일",
+          time: "",
+        },
+        {
+          day: "토요일",
+          time: "",
+        },
+        {
+          day: "일요일",
+          time: "",
+        },
+      ],
     };
   },
   methods: {
@@ -94,8 +124,12 @@ export default {
         homepage: this.homepage,
         address: this.address,
         tel: this.tel,
+        date: this.date,
       };
       console.log(form);
+    },
+    updateDate([day, time]) {
+      this.date[day] = time;
     },
   },
   computed: {},
@@ -103,7 +137,7 @@ export default {
 </script>
 
 <style scoped>
-/deep/ .v-btn {
+/deep/ v-btn {
   margin-left: 30px;
 }
 

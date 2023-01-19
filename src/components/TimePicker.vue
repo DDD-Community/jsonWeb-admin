@@ -5,8 +5,6 @@
       v-model="timeModal"
       :return-value.sync="time"
       persistent
-      lazy
-      full-width
       width="290px"
     >
       <template v-slot:activator="{ on }">
@@ -24,8 +22,8 @@
         :allowed-minutes="allowedMinutes"
       >
         <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click="timeModal = false">Cancel</v-btn>
-        <v-btn flat color="primary" @click="set">OK</v-btn>
+        <v-btn text color="primary" @click="timeModal = false">Cancel</v-btn>
+        <v-btn text color="primary" @click="set">OK</v-btn>
       </v-time-picker>
     </v-dialog>
   </v-col>
@@ -42,6 +40,7 @@ export default {
   methods: {
     set() {
       this.$refs.dialog.save(this.time);
+      this.$emit("timeFromChild", this.time);
     },
     allowedMinutes: (m) => m % 5 === 0,
   },
