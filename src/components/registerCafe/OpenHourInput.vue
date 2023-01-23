@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex align-center">
-    <div class="d-flex align-center">
+  <div class="d-flex justify-center">
+    <div>
       <v-text-field id="date" disabled :label="`${date}`"></v-text-field>
     </div>
     <div class="d-flex ml-5 mr-5">
@@ -16,8 +16,11 @@
         @timeFromChild="updateCloseTime"
       ></TimePicker>
     </v-row>
-    <v-row v-if="directInput">
-      <v-text-field v-model="textTime" @change="emitTime"
+    <v-row v-if="directInput" class="mr-15">
+      <v-text-field
+        v-model="textTime"
+        @change="emitTime"
+        placeholder="ex. 휴무일"
         >직접입력</v-text-field
       >
     </v-row>
@@ -25,7 +28,7 @@
 </template>
 
 <script>
-import TimePicker from "@/components/TimePicker.vue";
+import TimePicker from "@/components/registerCafe/TimePicker.vue";
 
 export default {
   name: "OpenHourInput",
