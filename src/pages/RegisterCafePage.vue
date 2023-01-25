@@ -26,7 +26,7 @@
               v-model="registerCafeForm.tel"
               label="전화번호"
               required
-              placeholder="- 없이 입력해 주세요"
+              placeholder="- 포함해서 입력해 주세요"
             ></v-text-field>
           </v-col>
           <v-col cols="8">
@@ -106,7 +106,7 @@ export default {
       },
       multipartImage: null,
       registerCafeForm: {
-        image: "",
+        imageUrl: "",
         name: "",
         homepage: "",
         address: "",
@@ -124,7 +124,7 @@ export default {
         // 이미지 먼저 업로드
         uploadImage(this.multipartImage)
           .then((res) => {
-            this.registerCafeForm.image = res.data;
+            this.registerCafeForm.imageUrl = res.data.data.imageUrl;
 
             // 이미지 업로드 성공 시 카페 등록 요청
             postCafe(this.registerCafeForm)

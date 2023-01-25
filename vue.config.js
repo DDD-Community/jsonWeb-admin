@@ -5,8 +5,9 @@ module.exports = defineConfig({
 module.exports = {
   devServer: {
     proxy: {
-      "/": {
+      "^/api": {
         target: "https://exitnow.link",
+        pathRewrite: { "^/api": "" },
         changeOrigin: true,
       },
     },

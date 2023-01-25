@@ -23,8 +23,8 @@ export default {
     return {
       priceInput: {
         day: "",
-        headCount: "",
-        price: "",
+        headCount: 0,
+        price: 0,
       },
     };
   },
