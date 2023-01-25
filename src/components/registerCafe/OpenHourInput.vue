@@ -8,12 +8,12 @@
     </div>
     <v-row v-if="!directInput">
       <TimePicker
-        :label="'오픈시각'"
-        @timeFromChild="updateOpenTime"
+        :label="CAFE.TIME.OPEN_KOR"
+        @time-from-picker="updateOpenTime"
       ></TimePicker>
       <TimePicker
-        :label="'종료시각'"
-        @timeFromChild="updateCloseTime"
+        :label="CAFE.TIME.CLOSE_KOR"
+        @time-from-picker="updateCloseTime"
       ></TimePicker>
     </v-row>
     <v-row v-if="directInput" class="mr-15">
@@ -29,19 +29,26 @@
 
 <script>
 import TimePicker from "@/components/registerCafe/TimePicker.vue";
+import { CAFE } from "@/constants/cafe";
 
 export default {
-  name: "OpenHourInput",
-  props: ["date"],
+  props: {
+    date: {
+      type: String,
+      required: true,
+    },
+  },
   components: {
     TimePicker,
   },
-  data: () => ({
-    directInput: false,
-    openTime: "",
-    closeTime: "",
-    textTime: "",
-  }),
+  data() {
+    return {
+      directInput: false,
+      openTime: CAFE.TIME.OPEN_TIME,
+      closeTime: CAFE.TIME.CLOSE_TIME,
+      textTime: "",
+    };
+  },
   methods: {
     updateOpenTime(openTime) {
       this.openTime = openTime;
@@ -51,18 +58,20 @@ export default {
       this.closeTime = closeTime;
       this.emitTime();
     },
+    getTimeText() {
+      return this.directInput
+        ? this.textTime
+        : `${this.openTime} ~ ${this.closeTime}`;
+    },
     emitTime() {
-      let time = "";
-      if (this.directInput) {
-        time = this.textTime;
-      } else {
-        time = `${this.openTime} ~ ${this.closeTime}`;
-      }
-      this.$emit("time", [this.$props.date, time]);
+      this.$emit("time", [this.$props.date, this.getTimeText()]);
     },
   },
-  mounted() {},
-  computed: {},
+  computed: {
+    CAFE() {
+      return CAFE;
+    },
+  },
 };
 </script>
 

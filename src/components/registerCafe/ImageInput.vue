@@ -23,10 +23,12 @@
 
 <script>
 export default {
-  data: () => ({
-    preview: "",
-    file: null,
-  }),
+  data() {
+    return {
+      preview: "",
+      file: null,
+    };
+  },
   methods: {
     previewFile(file) {
       if (file == null) {
@@ -45,12 +47,9 @@ export default {
         },
         false
       );
-
-      this.$emit("image", file);
+      this.$emit("multipart-image", file);
     },
   },
-  mounted() {},
-  computed: {},
 };
 </script>
 

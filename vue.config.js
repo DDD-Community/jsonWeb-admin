@@ -4,6 +4,11 @@ module.exports = defineConfig({
 });
 module.exports = {
   devServer: {
-    proxy: "https://exitnow.link",
+    proxy: {
+      "/": {
+        target: "https://exitnow.link",
+        changeOrigin: true,
+      },
+    },
   },
 };

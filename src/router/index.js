@@ -1,11 +1,10 @@
-import RegisterCafePage from "@/pages/RegisterCafePage.vue";
 import VueRouter from "vue-router";
 
 const routes = [
   {
     path: "/register/cafe",
     name: "registerCafe",
-    component: RegisterCafePage,
+    component: () => import("@/pages/RegisterCafePage.vue"),
   },
 ];
 

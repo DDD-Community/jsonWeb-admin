@@ -16,39 +16,46 @@
         ></v-text-field>
       </template>
       <v-time-picker
-        v-if="timeModal"
+        v-show="timeModal"
         v-model="time"
         full-width
-        :allowed-minutes="allowedMinutes"
+        :allowed-minutes="(m) => m % 5 === 0"
       >
         <v-spacer></v-spacer>
         <v-btn text color="primary" @click="timeModal = false">Cancel</v-btn>
-        <v-btn text color="primary" @click="set">OK</v-btn>
+        <v-btn text color="primary" @click="setTime">OK</v-btn>
       </v-time-picker>
     </v-dialog>
   </v-col>
 </template>
 
 <script>
+import { CAFE } from "@/constants/cafe";
+
 export default {
-  name: "TimePicker",
-  props: ["label"],
-  data: () => ({
-    time: "",
-    timeModal: false,
-  }),
-  methods: {
-    set() {
-      this.$refs.dialog.save(this.time);
-      this.$emit("timeFromChild", this.time);
+  props: {
+    label: {
+      type: String,
+      required: true,
     },
-    allowedMinutes: (m) => m % 5 === 0,
+  },
+  data() {
+    return {
+      time: "",
+      timeModal: false,
+    };
+  },
+  methods: {
+    setTime() {
+      this.$refs.dialog.save(this.time);
+      this.$emit("time-from-picker", this.time);
+    },
   },
   mounted() {
-    if (this.label === "오픈시각") {
-      this.time = "10:00";
-    } else if (this.label === "종료시각") {
-      this.time = "22:00";
+    if (this.label === CAFE.TIME.OPEN_KOR) {
+      this.time = CAFE.TIME.OPEN_TIME;
+    } else if (this.label === CAFE.TIME.CLOSE_KOR) {
+      this.time = CAFE.TIME.CLOSE_TIME;
     }
   },
 };

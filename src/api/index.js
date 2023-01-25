@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: "https://exitnow.link",
-});
+const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use((config) => {
   config.headers["Access-Control-Allow-Origin"] = "*";
