@@ -31,6 +31,8 @@
     </v-navigation-drawer>
     <v-main>
       <v-container>
+        <CustomSnackbar></CustomSnackbar>
+
         <router-view />
       </v-container>
     </v-main>
@@ -38,14 +40,25 @@
 </template>
 
 <script>
+import CustomSnackbar from "@/components/CustomSnackbar.vue";
+
 export default {
   name: "App",
+  components: { CustomSnackbar },
 
   data: () => ({
     drawer: false,
     items: [
-      { title: "카페등록", icon: "mdi-view-dashboard", to: "/register/cafe" },
-      { title: "테마등록", icon: "mdi-image", to: "/register/theme" },
+      {
+        title: "카페등록",
+        icon: "mdi-view-dashboard",
+        to: "/admin-page/register/cafe",
+      },
+      {
+        title: "테마등록",
+        icon: "mdi-image",
+        to: "/admin-page/register/theme",
+      },
     ],
     right: null,
   }),

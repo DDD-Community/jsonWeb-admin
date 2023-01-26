@@ -75,10 +75,6 @@
         </v-row>
       </v-container>
     </v-form>
-    <!--    <AlertSnackbar message="" show="priceInput.isAlert"></AlertSnackbar>-->
-    <v-snackbar v-model="priceInput.isAlert" top right color="red">
-      {{ priceInput.alertMessage }}
-    </v-snackbar>
   </v-card>
 </template>
 
@@ -86,13 +82,11 @@
 import OpenHourInput from "@/components/registerCafe/OpenHourInput.vue";
 import PriceInput from "@/components/registerCafe/PriceInput.vue";
 import ImageInput from "@/components/registerCafe/ImageInput.vue";
-import { getDefaultOpenHourList, DAYS } from "@/constants/cafe";
+import { CAFE, getDefaultOpenHourList } from "@/constants/cafe";
 import { postCafe, uploadImage } from "@/api/cafe";
-// import AlertSnackbar from "@/components/AlertSnackbar.vue";
 
 export default {
   components: {
-    // AlertSnackbar,
     ImageInput,
     OpenHourInput,
     PriceInput,
@@ -100,9 +94,7 @@ export default {
   data() {
     return {
       priceInput: {
-        count: 3,
-        isAlert: false,
-        alertMessage: "",
+        count: CAFE.PRICE_INPUT.DEFAULT,
       },
       multipartImage: null,
       registerCafeForm: {
@@ -114,31 +106,37 @@ export default {
         openHourList: getDefaultOpenHourList(),
         priceList: [],
       },
-      days: DAYS,
+      days: CAFE.DAYS,
     };
   },
   methods: {
+    alert(message, color = "red") {
+      this.$store.commit("snackbar/showMessage", {
+        message: message,
+        color: color,
+      });
+    },
     registerCafe() {
       console.log(this.registerCafeForm);
-      if (this.multipartImage != null) {
-        // 이미지 먼저 업로드
-        uploadImage(this.multipartImage)
-          .then((res) => {
-            this.registerCafeForm.imageUrl = res.data.data.imageUrl;
-
-            // 이미지 업로드 성공 시 카페 등록 요청
-            postCafe(this.registerCafeForm)
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+      if (this.multipartImage === null) {
+        this.alert(CAFE.MESSAGE.IMAGE_IS_REQUIRED);
+        return;
       }
+      uploadImage(this.multipartImage)
+        .then((res) => {
+          this.registerCafeForm.imageUrl = res.data.data.imageUrl;
+          postCafe(this.registerCafeForm)
+            .then((res) => {
+              this.alert(CAFE.MESSAGE.REGISTER_SUCCESS, "green");
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     updateDate([day, time]) {
       this.registerCafeForm.openHourList.find((it) => it.day === day).time =
@@ -146,24 +144,16 @@ export default {
     },
     addPriceInputNum() {
       this.priceInput.count++;
-      if (this.priceInput.count > 5) {
-        this.priceInput.isAlert = true;
-        this.priceInput.count = 5;
-        this.priceInput.alertMessage = "최대 5개까지 입력 가능합니다.";
-        setTimeout(() => {
-          this.priceInput.isAlert = false;
-        }, 2000);
+      if (this.priceInput.count > CAFE.PRICE_INPUT.MAX) {
+        this.priceInput.count = CAFE.PRICE_INPUT.MAX;
+        this.alert(CAFE.PRICE_INPUT.MAX_LIMIT_MSG);
       }
     },
     subPriceInputNum() {
       this.priceInput.count--;
-      if (this.priceInput.count < 1) {
-        this.priceInput.isAlert = true;
-        this.priceInput.count = 1;
-        this.priceInput.alertMessage = "최소 1개는 입력해야 합니다.";
-        setTimeout(() => {
-          this.priceInput.isAlert = false;
-        }, 2000);
+      if (this.priceInput.count < CAFE.PRICE_INPUT.MIN) {
+        this.priceInput.count = CAFE.PRICE_INPUT.MIN;
+        this.alert(CAFE.PRICE_INPUT.MIN_LIMIT_MSG);
       }
     },
     updatePriceInput(priceInput) {
@@ -176,8 +166,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/deep/ v-btn {
-  margin-left: 30px;
-}
-</style>
+<style scoped></style>
