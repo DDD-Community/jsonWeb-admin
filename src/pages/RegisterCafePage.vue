@@ -3,8 +3,8 @@
     <v-form>
       <div class="d-flex justify-center text-h4">카페 등록</div>
       <v-container>
-        <v-row class="ml-15 mr-15" v-for="j in 2" :key="j.id">
-          <v-col v-for="i in 2" :key="i.id">
+        <v-row class="ml-15 mr-15">
+          <v-col>
             <v-text-field
               v-model="registerCafeForm.name"
               label="카페 이름"
@@ -40,7 +40,10 @@
         </v-row>
         <v-row class="ml-15 mr-15">
           <v-col>
-            <ImageInput @multipart-image="updateImage"></ImageInput>
+            <ImageInput
+              label="카페 사진"
+              @multipart-image="updateImage"
+            ></ImageInput>
           </v-col>
         </v-row>
         <v-row class="ml-15 mr-15">
@@ -81,8 +84,8 @@
 <script>
 import OpenHourInput from "@/components/registerCafe/OpenHourInput.vue";
 import PriceInput from "@/components/registerCafe/PriceInput.vue";
-import ImageInput from "@/components/registerCafe/ImageInput.vue";
-import { CAFE, DEFAULT_OPEN_HOUR_LIST } from "@/constants/cafe";
+import ImageInput from "@/components/ImageInput.vue";
+import { CAFE, getDefaultOpenHourList } from "@/constants/cafe";
 import { postCafe, uploadImage } from "@/api/cafe";
 
 export default {
@@ -103,7 +106,7 @@ export default {
         homepage: "",
         address: "",
         tel: "",
-        openHourList: DEFAULT_OPEN_HOUR_LIST,
+        openHourList: getDefaultOpenHourList(),
         priceList: [],
       },
       days: CAFE.DAYS,
@@ -117,15 +120,18 @@ export default {
       });
     },
     async registerCafe() {
+      console.log(this.registerCafeForm);
       if (!this.multipartImage) {
         this.alert(CAFE.MESSAGE.IMAGE_IS_REQUIRED);
         return;
       }
       this.registerCafeForm.imageUrl = await uploadImage(this.multipartImage);
-      await postCafe(this.registerCafeForm);
-      postCafe(this.registerCafeForm).then(() => {
+      const success = await postCafe(this.registerCafeForm);
+      if (success) {
         this.alert(CAFE.MESSAGE.REGISTER_SUCCESS, "green");
-      });
+      } else {
+        this.alert(CAFE.MESSAGE.REGISTER_FAIL);
+      }
     },
     updateDate([day, time]) {
       this.registerCafeForm.openHourList.find((it) => it.day === day).time =

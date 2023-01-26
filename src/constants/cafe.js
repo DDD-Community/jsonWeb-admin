@@ -1,5 +1,5 @@
 export const CAFE = {
-  DAYS: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+  DAYS: ["월", "화", "수", "목", "금", "토", "일"],
   TIME: {
     OPEN_KOR: "오픈시각",
     CLOSE_KOR: "마감시각",
@@ -19,6 +19,17 @@ export const CAFE = {
     REGISTER_FAIL: "카페 등록에 실패했습니다.",
   },
 };
+
+export function getDefaultOpenHourList() {
+  const openHourList = [];
+  for (let i = 0; i < CAFE.DAYS.length; i++) {
+    openHourList.push({
+      day: CAFE.DAYS[i],
+      time: `${CAFE.TIME.OPEN_TIME} ~ ${CAFE.TIME.CLOSE_TIME}`,
+    });
+  }
+  return openHourList;
+}
 export const DEFAULT_OPEN_HOUR_LIST = CAFE.DAYS.reduce((acc, cur) => {
   acc?.push({
     day: cur,

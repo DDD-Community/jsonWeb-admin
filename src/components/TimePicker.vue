@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="4" sm="6" md="4">
+  <v-col>
     <v-dialog
       ref="dialog"
       v-model="timeModal"
@@ -19,7 +19,7 @@
         v-show="timeModal"
         v-model="time"
         full-width
-        :allowed-minutes="(m) => m % 5 === 0"
+        :allowed-minutes="allowMinutes"
       >
         <v-spacer></v-spacer>
         <v-btn text color="primary" @click="timeModal = false">Cancel</v-btn>
@@ -30,13 +30,16 @@
 </template>
 
 <script>
-import { CAFE } from "@/constants/cafe";
-
 export default {
   props: {
     label: {
       type: String,
-      required: true,
+    },
+    defaultTime: {
+      type: String,
+    },
+    allowMinutes: {
+      type: Function,
     },
   },
   data() {
@@ -52,11 +55,7 @@ export default {
     },
   },
   mounted() {
-    if (this.label === CAFE.TIME.OPEN_KOR) {
-      this.time = CAFE.TIME.OPEN_TIME;
-    } else if (this.label === CAFE.TIME.CLOSE_KOR) {
-      this.time = CAFE.TIME.CLOSE_TIME;
-    }
+    this.time = this.defaultTime;
   },
 };
 </script>

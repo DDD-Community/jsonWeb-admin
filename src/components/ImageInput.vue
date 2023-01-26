@@ -9,7 +9,7 @@
           v-model="file"
           :multiple="false"
           :clearable="false"
-          label="카페 대표 사진"
+          :label="`${label}`"
           filled
           prepend-icon="mdi-camera"
           accept="image/*"
@@ -23,6 +23,12 @@
 
 <script>
 export default {
+  props: {
+    label: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       preview: "",
@@ -35,15 +41,12 @@ export default {
         this.preview = "";
         return;
       }
-      const fileData = (data) => {
-        this.preview = data;
-      };
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.addEventListener(
         "load",
         () => {
-          fileData(reader.result);
+          this.preview = reader.result;
         },
         false
       );

@@ -14,7 +14,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error(error);
+    console.error(`에러 ${error}, ${error.response.data.message}`);
   }
 );
 
