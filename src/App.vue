@@ -3,8 +3,9 @@
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-        <v-toolbar-title>EXIT Admin Back-Office</v-toolbar-title>
+        <v-toolbar-title>
+          <v-btn color="primary" depressed :to="main">EXIT Admin</v-btn>
+        </v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -32,7 +33,6 @@
     <v-main>
       <v-container>
         <CustomSnackbar></CustomSnackbar>
-
         <router-view />
       </v-container>
     </v-main>
@@ -48,6 +48,7 @@ export default {
 
   data: () => ({
     drawer: false,
+    main: "/admin",
     items: [
       {
         title: "카페등록",
@@ -60,7 +61,6 @@ export default {
         to: "/admin-page/register/theme",
       },
     ],
-    right: null,
   }),
 };
 </script>

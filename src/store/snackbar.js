@@ -16,5 +16,9 @@ export const snackbar = {
     },
   },
   getters: {},
-  actions: {},
+  actions: {
+    showMessage({ commit }, { message, color }) {
+      commit("showMessage", { message, color });
+    },
+  },
 };

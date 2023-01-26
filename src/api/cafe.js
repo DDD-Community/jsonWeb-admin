@@ -8,7 +8,7 @@ export const uploadImage = async (image) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  return response;
+  return response.data.imageUrl;
 };
 export const postCafe = async (registerForm) => {
   return await axiosInstance.post("/cafes", registerForm);

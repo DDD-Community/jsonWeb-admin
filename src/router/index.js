@@ -6,6 +6,11 @@ const routes = [
     name: "registerCafe",
     component: () => import("@/pages/RegisterCafePage.vue"),
   },
+  {
+    path: "/admin",
+    name: "main",
+    component: () => import("@/pages/MainPage.vue"),
+  },
 ];
 
 const router = new VueRouter({

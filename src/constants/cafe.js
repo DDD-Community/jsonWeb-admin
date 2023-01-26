@@ -19,14 +19,9 @@ export const CAFE = {
     REGISTER_FAIL: "카페 등록에 실패했습니다.",
   },
 };
-
-export function getDefaultOpenHourList() {
-  const openHourList = [];
-  for (let i = 0; i < CAFE.DAYS.length; i++) {
-    openHourList.push({
-      day: CAFE.DAYS[i],
-      time: `${CAFE.TIME.OPEN_TIME} ~ ${CAFE.TIME.CLOSE_TIME}`,
-    });
-  }
-  return openHourList;
-}
+export const DEFAULT_OPEN_HOUR_LIST = CAFE.DAYS.reduce((acc, cur) => {
+  acc?.push({
+    day: cur,
+    time: `${CAFE.TIME.OPEN_TIME} ~ ${CAFE.TIME.CLOSE_TIME}`,
+  });
+}, []);
