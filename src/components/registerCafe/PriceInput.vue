@@ -4,13 +4,16 @@
     <v-text-field
       class="ml-5"
       label="사람수"
+      min="0"
       type="number"
       v-model="priceInput.headCount"
     ></v-text-field>
     <v-text-field
       @change="emitData"
       class="ml-3"
-      label="가격"
+      label="가격(원)"
+      min="0"
+      step="100"
       type="number"
       v-model="priceInput.price"
     ></v-text-field>

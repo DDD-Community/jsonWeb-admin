@@ -14,10 +14,15 @@ export const CAFE = {
     MAX_LIMIT_MSG: "최대 5개까지 입력 가능합니다.",
   },
   MESSAGE: {
-    IMAGE_IS_REQUIRED: "카페 이미지를 업로드 해주세요.",
     REGISTER_SUCCESS: "카페가 등록되었습니다.",
     REGISTER_FAIL: "카페 등록에 실패했습니다.",
   },
+};
+
+export const IMAGE_TYPE = {
+  CAFE: "cafe",
+  THEME: "theme",
+  ERROR_MESSAGE: "대표 사진을 등록해 주세요.",
 };
 
 export function getDefaultOpenHourList() {
@@ -30,9 +35,3 @@ export function getDefaultOpenHourList() {
   }
   return openHourList;
 }
-export const DEFAULT_OPEN_HOUR_LIST = CAFE.DAYS.reduce((acc, cur) => {
-  acc?.push({
-    day: cur,
-    time: `${CAFE.TIME.OPEN_TIME} ~ ${CAFE.TIME.CLOSE_TIME}`,
-  });
-}, []);

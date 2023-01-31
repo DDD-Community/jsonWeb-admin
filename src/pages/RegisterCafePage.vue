@@ -41,7 +41,7 @@
         <v-row class="ml-15 mr-15">
           <v-col>
             <ImageInput
-              label="카페 사진"
+              label="카페 대표 사진"
               @multipart-image="updateImage"
             ></ImageInput>
           </v-col>
@@ -85,8 +85,8 @@
 import OpenHourInput from "@/components/registerCafe/OpenHourInput.vue";
 import PriceInput from "@/components/registerCafe/PriceInput.vue";
 import ImageInput from "@/components/ImageInput.vue";
-import { CAFE, getDefaultOpenHourList } from "@/constants/cafe";
-import { postCafe, uploadImage } from "@/api/cafe";
+import { CAFE, getDefaultOpenHourList, IMAGE_TYPE } from "@/constants/cafe";
+import { postCafe, uploadImage } from "@/api/api";
 
 export default {
   components: {
@@ -122,10 +122,13 @@ export default {
     async registerCafe() {
       console.log(this.registerCafeForm);
       if (!this.multipartImage) {
-        this.alert(CAFE.MESSAGE.IMAGE_IS_REQUIRED);
+        this.alert(IMAGE_TYPE.ERROR_MESSAGE);
         return;
       }
-      this.registerCafeForm.imageUrl = await uploadImage(this.multipartImage);
+      this.registerCafeForm.imageUrl = await uploadImage(
+        this.multipartImage,
+        IMAGE_TYPE.CAFE
+      );
       const success = await postCafe(this.registerCafeForm);
       if (success) {
         this.alert(CAFE.MESSAGE.REGISTER_SUCCESS, "green");

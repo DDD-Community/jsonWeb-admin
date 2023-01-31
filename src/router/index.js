@@ -7,6 +7,11 @@ const routes = [
     component: () => import("@/pages/RegisterCafePage.vue"),
   },
   {
+    path: "/admin-page/register/theme",
+    name: "registerTheme",
+    component: () => import("@/pages/RegisterTheme.vue"),
+  },
+  {
     path: "/admin",
     name: "main",
     component: () => import("@/pages/MainPage.vue"),
